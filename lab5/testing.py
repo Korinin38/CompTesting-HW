@@ -66,10 +66,10 @@ def test_people_schema():
     return (response.status_code != 404)
 
 
-def test_durability(count=1000):
+def test_durability(count=1000, timeout=3):
     for i in range(count):
         url = "https://swapi.dev/api/"
-        response = get(url, timeout=3).status_code
+        response = get(url, timeout=timeout).status_code
         assert response == 200
         if i % (count // 100) == 0:
             print(".", end="", flush=True)
@@ -109,6 +109,13 @@ def test_starships_random_batch(count=20):
 
 
 if __name__ == "__main__":
-    functions = [test_people_traverse, test_durability, test_starships_random_batch, test_people_schema]
+    functions = [
+        test_people_traverse, 
+        test_durability, 
+        test_starships_random_batch, 
+        test_people_schema
+        ]
     for f in functions:
+        print(f"Beginning {f.__name__}.", end="\n\n")
         f()
+        print("------------", end="\n\n")
