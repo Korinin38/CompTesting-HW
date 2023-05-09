@@ -113,7 +113,7 @@ if __name__ == "__main__":
         test_people_traverse, 
         test_durability, 
         test_starships_random_batch, 
-        test_people_schema
+        test_people_schema  # test which, sadly, does not pass
         ]
     for f in functions:
         print(f"Beginning {f.__name__}.", end="\n\n")
