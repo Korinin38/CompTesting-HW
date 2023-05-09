@@ -24,16 +24,20 @@ def test_traverse_people():
     old_count = None
     true_count = 0
     while url != None:
-        print(url, end="")
+        print(url, flush=True)
         response = get(url).json()
         assert response["count"] is not None
+
         if old_count is not None:
             assert response["count"] == old_count
+        else:
+            print(f"Total count of people: {response['count']}")
+
         old_count = response["count"]
         true_count += len(response["results"])
         for person in response["results"]:
             test_single_person_by_data(person)
-            print(".", end="")
+            print(".", end="", flush=True)
             assert get(person["url"]).json() == person
         url = response["next"]
         print()
@@ -51,5 +55,6 @@ def test_durability(count=1000):
 
 
 if __name__ == "__main__":
-    # test_traverse_people()
-    test_durability()
+    test_traverse_people()
+    # test_durability()
+    test_durability(0)
